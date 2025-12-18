@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 08:45:55 by ufo               #+#    #+#             */
-/*   Updated: 2025/12/17 19:09:34 by ufo              ###   ########.fr       */
+/*   Updated: 2025/12/18 20:08:16 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,15 @@ std::map<std::string, double> BitcoinExchange:: getDB() {
     return this->_db;
 }
 
-double BitcoinExchange:: convert(const std::string date, const std::string val) const {
-    date + val;
+int BitcoinExchange:: convert(const std::string date, const double val, double *result) const {
+    std::map<std::string, double>::const_iterator dbRelevantIter = _db.lower_bound(date);
+    if (dbRelevantIter == _db.begin() && dbRelevantIter->first > date) {
+        return 404;
+    } else {
+        if (dbRelevantIter == _db.end() || dbRelevantIter->first != date)
+            --dbRelevantIter;
+
+        *result = val * dbRelevantIter->second;
+    }
     return 200;
 }

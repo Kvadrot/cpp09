@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 10:21:34 by ufo               #+#    #+#             */
-/*   Updated: 2025/12/18 18:49:19 by ufo              ###   ########.fr       */
+/*   Updated: 2025/12/18 19:44:51 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void processInput(std::ifstream &inputFile, const BitcoinExchange &btcEx)
     std::string date;
     std::string value;
     double digitVal;
+    double result;
 
     while (std::getline(inputFile, line))
     {
@@ -113,10 +114,14 @@ void processInput(std::ifstream &inputFile, const BitcoinExchange &btcEx)
         digitVal = atof(value.c_str());
         if (validateValue(&digitVal) == 404)
         {
-            std::cerr << "Error: bad input => " << value << std::endl;
+            std::cerr << "Error: not valid value => " << value << std::endl;
             continue;
         }
-        std::cout << btcEx.convert(date, value) << std::endl;
+        if (btcEx.convert(date, digitVal, &result) == 404) {
+            std::cerr << "Error: wrong Date => " << date << std::endl;
+            continue;
+        }
+        std::cout << date << " => " << value << " = " << result << std::endl;
     }
 }
 
