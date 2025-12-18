@@ -6,11 +6,11 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 10:21:34 by ufo               #+#    #+#             */
-/*   Updated: 2025/12/15 11:36:33 by ufo              ###   ########.fr       */
+/*   Updated: 2025/12/18 18:49:19 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
+#include <cstdlib>
 #include <iostream>
 #include <fstream>
 #include <exception>
@@ -43,11 +43,89 @@ std::map<std::string, double> convert_file_into_map(std::ifstream &file ) {
     return (dictionary);
 }
 
+
+void parseInputLine(const std::string &line,
+                    std::string *date,
+                    std::string *value)
+{
+    size_t separator = line.find(" | ");
+    if (separator == std::string::npos)
+        return;
+
+    *date = line.substr(0, separator);
+    *value = line.substr(separator + 3);
+}
+
+
+int validateValue(double *val) {
+    // double converted val
+    if (val == NULL)
+        return 404;
+    else if (*val < 0)
+        return 404;
+    else if (*val > 1000)
+        return 404;
+
+    return 200;
+}
+int validateDate(const std::string &date) {
+    if (date.size() != 10)
+        return 404;
+    if (date[4] != '-' || date[7] != '-')
+        return 404;
+    for (size_t i = 0; i < 10; i++) {
+        if (i == 4 || i == 7)
+            continue;
+        if(!isdigit(date[i])) {
+            return 404;
+        }
+    }
+    int year = atoi(date.substr(0,3).c_str());
+    int month = atoi(date.substr(5,6).c_str());
+    int day = atoi(date.substr(8,9).c_str());
+
+    if (month < 1 || month > 12)
+        return 404;
+
+    if (day < 1 || day > 31) {
+        return 404;
+    }
+    
+    return 200;
+}
+
+void processInput(std::ifstream &inputFile, const BitcoinExchange &btcEx)
+{
+    std::string line;
+    std::string date;
+    std::string value;
+    double digitVal;
+
+    while (std::getline(inputFile, line))
+    {
+        parseInputLine(line, &date, &value);
+
+        if (validateDate(date) == 404)
+        {
+            std::cerr << "Error: bad input => " << date << std::endl;
+            continue;
+        }
+        digitVal = atof(value.c_str());
+        if (validateValue(&digitVal) == 404)
+        {
+            std::cerr << "Error: bad input => " << value << std::endl;
+            continue;
+        }
+        std::cout << btcEx.convert(date, value) << std::endl;
+    }
+}
+
 int main(int argc, char **argv) {
 
     std::ifstream db;
     std::ifstream inputFile;
     std::map<std::string, double> dict_db;
+    BitcoinExchange btcEx;
     
     if (argc != 2 ) {
         std::cerr << "Error: Not enough args (input.txt is expected as an input)\n";
@@ -60,14 +138,18 @@ int main(int argc, char **argv) {
         return (1);
     }
     dict_db = convert_file_into_map(db);
-    printMap(dict_db);
-
+    db.close();
+    btcEx = BitcoinExchange(dict_db);
+    // printMap(dict_db); only for testing db
+    
     inputFile.open(argv[1]);
-    // if (!inputFile.is_open()) {
-    //     std::cerr << "Error: during the file openning\n";
-    //     db.close();
-    //     return (1);
-    // }
+    if (!inputFile.is_open()) {
+        std::cerr << "Error: during the file openning\n";
+        return (1);
+    }
+    
+    processInput(inputFile, btcEx);
+    inputFile.close();
     
     return (0);
 }

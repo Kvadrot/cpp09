@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 12:03:09 by ufo               #+#    #+#             */
-/*   Updated: 2025/12/15 08:45:50 by ufo              ###   ########.fr       */
+/*   Updated: 2025/12/17 19:09:35 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,13 @@ class BitcoinExchange {
         
     public: 
         BitcoinExchange();
+        BitcoinExchange(std::map<std::string, double> mappedData);
         BitcoinExchange(const BitcoinExchange &other);
         BitcoinExchange &operator=(const BitcoinExchange &other);
         ~BitcoinExchange();
+
+        std::map<std::string, double> getDB();
+        double convert(const std::string date, const std::string val) const;
 
 };
 
