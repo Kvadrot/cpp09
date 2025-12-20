@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 10:21:34 by ufo               #+#    #+#             */
-/*   Updated: 2025/12/19 23:41:18 by ufo              ###   ########.fr       */
+/*   Updated: 2025/12/20 19:29:42 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ int main(int argc, char **argv) {
         return 1;
     }
     
-    calculator.calculate(argv[1], result);
-    
+    if (calculator.calculate(argv[1], result) < 0) {
+        return 1;
+    }
+    std::cout << "result is: " << result << std::endl;
     
     return 0;
 }
