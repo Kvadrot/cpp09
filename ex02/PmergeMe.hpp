@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 16:51:49 by ufo               #+#    #+#             */
-/*   Updated: 2025/12/23 20:50:53 by ufo              ###   ########.fr       */
+/*   Updated: 2025/12/23 21:30:31 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ private:
 
     void splitArrIntoPairs(const std::vector<int> &arrToSplit, std::vector< std::pair<int,int> > &splitedPairs,
         bool &hasRemainder,int &remainder);
-    void splitDequeIntoPairs(const std::deque<int> &deqToSplit, std::vector< std::pair<int,int> > &splitedPairs,
+    void splitDequeIntoPairs(const std::deque<int> &deqToSplit, std::deque< std::pair<int,int> > &splitedPairs,
         bool &hasRemainder,int &remainder);
 
 public:

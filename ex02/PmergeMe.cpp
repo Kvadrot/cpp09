@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 16:51:52 by ufo               #+#    #+#             */
-/*   Updated: 2025/12/23 20:56:36 by ufo              ###   ########.fr       */
+/*   Updated: 2025/12/23 21:31:35 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void PmergeMe::splitArrIntoPairs(
 
 void  PmergeMe::splitDequeIntoPairs(
     const std::deque<int> &deqToSplit, 
-    std::vector< std::pair<int,int> > &splitedPairs,
+    std::deque< std::pair<int,int> > &splitedPairs,
     bool &hasRemainder,
     int &remainder) {
 
@@ -114,24 +114,39 @@ std::vector<int> PmergeMe::sortArr(const std::vector<int> &arr) {
     int remainder = 0;
 
     splitArrIntoPairs(arr, splitedPairs, hasRemainder, remainder);
-    std::cout << "check the splited arr after splitArrIntoPairs()" << std::endl;
-    std::cout << "======================================================================" << std::endl;
-    printPairedContainer(splitedPairs);
-    std::cout << "======================================================================" << std::endl;
+    // std::cout << "check the splited arr after splitArrIntoPairs()" << std::endl;
+    // std::cout << "======================================================================" << std::endl;
+    // printPairedContainer(splitedPairs);
+    // std::cout << "======================================================================" << std::endl;
+    std::vector <int> bigNums;
+    std::vector <int> smallNums;
+
+    for (int i = 0; i < splitedPairs.size(); i++) {
+        smallNums.push_back(splitedPairs[i].first);
+        bigNums.push_back(splitedPairs[i].second);
+    }
     
     return _arr;
 }
 
 std::deque<int> PmergeMe::sortDeq(const std::deque<int> &deq) {
-    std::vector< std::pair<int,int> > splitedPairs;
+    std::deque< std::pair<int,int> > splitedPairs;
     bool hasRemainder = false;
     int remainder = 0;
     
     splitDequeIntoPairs(deq, splitedPairs, hasRemainder, remainder);
-    std::cout << "check the splited deq after splitDequeIntoPairs()" << std::endl;
-    std::cout << "======================================================================" << std::endl;
-    printPairedContainer(splitedPairs);
-    std::cout << "======================================================================" << std::endl;
+    // std::cout << "check the splited deq after splitDequeIntoPairs()" << std::endl;
+    // std::cout << "======================================================================" << std::endl;
+    // printPairedContainer(splitedPairs);
+    // std::cout << "======================================================================" << std::endl;
+
+    std::deque <int> bigNums;
+    std::deque <int> smallNums;
+
+    for (int i = 0; i < splitedPairs.size(); i++) {
+        smallNums.push_back(splitedPairs[i].first);
+        bigNums.push_back(splitedPairs[i].second);
+    }
     
     return _deq;
 }
