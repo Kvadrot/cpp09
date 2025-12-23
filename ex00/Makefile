@@ -1,5 +1,5 @@
 C++ = c++
-C++_FLAGS = -std=c++98 #-Wall -Wextra -Werror -std=c++98
+C++_FLAGS = -Wall -Wextra -Werror -std=c++98
 
 SRC = main.cpp\
 		BitcoinExchange.cpp\
