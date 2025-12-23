@@ -6,7 +6,7 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 10:21:34 by ufo               #+#    #+#             */
-/*   Updated: 2025/12/21 18:05:59 by ufo              ###   ########.fr       */
+/*   Updated: 2025/12/23 20:14:33 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,9 @@ int main(int argc, char **argv) {
         arr.push_back(num);
         deq.push_back(num);
     }
+
+    PmergeMe test = PmergeMe(arr, deq);
+    test.sort();
     
     return 0;
 }

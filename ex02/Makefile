@@ -2,11 +2,12 @@ C++ = c++
 C++_FLAGS = -std=c++98 #-Wall -Wextra -Werror -std=c++98
 
 SRC = main.cpp\
+	PmergeMe.cpp\
 
 
 OBJFILES = $(SRC:.cpp=.o)
 
-NAME = RPN
+NAME = mergeme
 
 all: $(NAME)
 
