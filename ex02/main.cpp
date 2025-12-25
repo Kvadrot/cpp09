@@ -6,12 +6,45 @@
 /*   By: ufo <ufo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 10:21:34 by ufo               #+#    #+#             */
-/*   Updated: 2025/12/23 20:14:33 by ufo              ###   ########.fr       */
+/*   Updated: 2025/12/25 15:21:19 by ufo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <set>
 #include "PmergeMe.hpp"
+
+template <typename Container>
+void printContainer(const Container &c)
+{
+    typename Container::const_iterator it = c.begin();
+    while (it != c.end())
+    {
+        std::cout << *it << " ";
+        ++it;
+    }
+    std::cout << std::endl;
+}
+
+template <typename Container>
+bool isAscendingSort(const Container &c)
+{
+    typename Container::const_iterator it = c.begin();
+    if (it == c.end())
+        return true;
+
+    typename Container::const_iterator next = it;
+    ++next;
+
+    while (next != c.end())
+    {
+        if (*it > *next)
+            return false;
+        ++it;
+        ++next;
+    }
+    return true;
+}
+
 
 bool isValidInput(const std::string &param) {
     if (param.empty() == true) {
@@ -88,6 +121,29 @@ int main(int argc, char **argv) {
 
     PmergeMe test = PmergeMe(arr, deq);
     test.sort();
+    
+    std::vector <int> sortedArr = test.getSortedArr();
+    std::deque <int> sortedDeq = test.getSortedDeq();
+    double arrTime = test.getSortTimeArray() / 1000;
+    double deqTime = test.getSortTimeDeque() / 1000;
+    
+    std::cout << "Before:  ";
+    printContainer(arr);
+    std::cout << std::endl;
+
+    std::cout << "After:  ";
+    printContainer(sortedArr);
+    std::cout << std::endl;
+
+    std::cout << "Time to process a range of " << argc - 1 << " elements with std::vector : " << arrTime <<  " us" << std::endl;
+    std::cout << "Time to process a range of " << argc - 1 << " elements with std::deque : " << deqTime <<  " us" << std::endl;
+
+    // printContainer(sortedArr);
+    // if (isAscendingSort(sortedArr) == true)
+    //     std::cout << "is sortedWell == true" << std::endl;
+    // else
+    //     std::cout << "is sortedWell == false" << std::endl;
+    
     
     return 0;
 }

@@ -7,7 +7,7 @@ SRC = main.cpp\
 
 OBJFILES = $(SRC:.cpp=.o)
 
-NAME = mergeme
+NAME = PmergeMe
 
 all: $(NAME)
 
